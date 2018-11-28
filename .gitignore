@@ -1,10 +1,13 @@
 
 # Created by https://www.gitignore.io/api/vim,osx,linux,node
-db 
-temp 
+db
+temp
 data
-.env 
+.env
+*.crt
+*.key
 *.env
+package-lock.json
 
 ### Vim ###
 # swap

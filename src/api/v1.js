@@ -17,6 +17,12 @@ let sendJSON = (data,response) => {
 
 router.param('model', modelFinder);
 
+router.get('/api/v1/:model/:name', (request,response,next) => {
+  request.model.find({name:request.params.name})
+    .then( result => sendJSON(result, response) )
+    .catch( next );
+ });
+
 router.get('/api/v1/:model/schema', auth(), (request, response) => {
   sendJSON(request.model.jsonSchema(), response);
 });

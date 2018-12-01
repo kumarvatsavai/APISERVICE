@@ -21,7 +21,7 @@ router.get('/api/v1/:model/:name',auth(), (request,response,next) => {
   request.model.find({name:request.params.name})
     .then( result => sendJSON(result, response) )
     .catch( next );
- });
+});
 
 router.get('/api/v1/:model/schema', auth(), (request, response) => {
   sendJSON(request.model.jsonSchema(), response);
@@ -45,7 +45,13 @@ router.get('/api/v1/:model/:id', (request,response,next) => {
     .catch( next );
 });
 
-router.post('/api/v1/:model',auth(), (request,response,next) => {
+router.get('/api/v1/:model/:name', (request,response,next) => {
+  request.model.find({name:request.params.name})
+    .then( result => sendJSON(result, response) )
+    .catch( next );
+});
+
+router.post('/api/v1/:model', (request,response,next) => {
   request.model.save(request.body)
     .then( result => sendJSON(result, response) )
     .catch( next );

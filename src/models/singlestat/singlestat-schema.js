@@ -2,7 +2,7 @@
 
 import mongoose from 'mongoose';
 require('mongoose-schema-jsonschema')(mongoose);
-import auth from '../../auth/middleware';
+//import auth from '../../auth/middleware';
 
 import playerstats from '../playerstats/playerstat-schema';
 

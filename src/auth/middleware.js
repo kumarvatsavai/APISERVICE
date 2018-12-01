@@ -17,12 +17,12 @@ export default (capability) => {
       // BEARER Auth ... Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI
 
       switch(authType.toLowerCase()) {
-        case 'basic':
-          return _authBasic(authString);
-        case 'bearer':
-          return _authBearer(authString);
-        default:
-          return _authError();
+      case 'basic':
+        return _authBasic(authString);
+      case 'bearer':
+        return _authBearer(authString);
+      default:
+        return _authError();
       }
 
     } catch(e) {

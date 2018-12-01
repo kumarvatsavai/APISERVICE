@@ -1,4 +1,4 @@
-# apiServices
+# APIServices
 ## Overview
 This API is used as the route/method to signup / sign-in to the game app. Manages database for the overall application. 
 ## USER

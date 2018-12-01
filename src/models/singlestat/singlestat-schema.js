@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose';
 require('mongoose-schema-jsonschema')(mongoose);
+import auth from '../../auth/middleware';
 
 import playerstats from '../playerstats/playerstat-schema';
 
@@ -12,7 +13,13 @@ const singlestat = mongoose.Schema({
   name: { type:String, required:true},
   win: {type:Boolean},
 });
+//////////////////////////////////////////////////
 
+// singlestat.pre('save', function(next) {
+
+// })
+//////////////////////////////////////////////////
+// MAYBE DO A SIGNIN route and check if the token is the same with the received token (gameserver)
 
 singlestat.post('save', function(next) {
 

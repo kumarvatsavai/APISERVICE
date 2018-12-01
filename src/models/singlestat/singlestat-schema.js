@@ -13,7 +13,6 @@ const singlestat = mongoose.Schema({
   win: {type:Boolean},
 });
 
-
 singlestat.post('save', function(next) {
 
   return playerstats.find({name: this.name})

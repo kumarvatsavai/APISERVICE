@@ -33,14 +33,6 @@ app.get('/', auth(), (req,res) => {
   res.send('hi');
 });
 
-// app.get('/s', auth('create'), (req,res) => {
-//   res.send('hi');
-// });
-
-// app.get('/d', auth('delete'), (req,res) => {
-//   res.send('hi');
-// });
-
 // Catchalls
 app.use(notFound);
 app.use(errorHandler);

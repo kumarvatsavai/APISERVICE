@@ -17,7 +17,7 @@ let sendJSON = (data,response) => {
 
 router.param('model', modelFinder);
 
-router.get('/api/v1/:model/:name', (request,response,next) => {
+router.get('/api/v1/:model/:name', auth('read'), (request,response,next) => {
   request.model.find({name:request.params.name})
     .then( result => sendJSON(result, response) )
     .catch( next );

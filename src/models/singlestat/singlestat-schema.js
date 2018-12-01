@@ -5,8 +5,6 @@ require('mongoose-schema-jsonschema')(mongoose);
 
 import playerstats from '../playerstats/playerstat-schema';
 
-console.log('IMPORTED playerstats schema: ', playerstats);
-
 // Incoming data from game server
 const singlestat = mongoose.Schema({
   name: { type:String, required:true},

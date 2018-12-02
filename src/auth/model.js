@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
+    email: {type: String, unique: true},
     role: {type:String, default:'user', enum:['user', 'editor', 'admin', 'superuser']},
   },
   {
@@ -22,7 +22,7 @@ userSchema.virtual('acl', {
   ref:'roles',
   localField:'role',
   foreignField:'role',
-  justOne:true, 
+  justOne:true,
 });
 
 userSchema.pre('findOne', function() {

@@ -39,7 +39,7 @@ export default (capability) => {
     }
 
     function _authenticate(user) {
-      if (( user && (!capability)) || (user.acl && user.acl.capabilities && user.acl.capabilities.includes(capability))) {
+      if ((user && (!capability)) || _authorize(user)) { 
         req.user = user;
         req.token = user.generateToken();
         next();
@@ -47,6 +47,13 @@ export default (capability) => {
       else {
         _authError();
       }
+    }
+
+    function _authorize(user) {
+      if (user && user.acl && user.acl.capabilities && user.acl.capabilities.includes(capability)) { 
+        return true;
+      }
+      return false;
     }
 
     function _authError() {

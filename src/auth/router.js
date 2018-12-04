@@ -10,7 +10,6 @@ const authRouter = express.Router();
 
 import User from './model.js';
 import Role from './roles-schema.js';
-import roleModel from './roles-model';
 import auth from './middleware.js';
 import oauth from './lib/oauth.js';
 

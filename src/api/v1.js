@@ -27,9 +27,6 @@ router.get('/api/v1/:model/schema', auth('admin'), (request, response) => {
 });
 
 router.get('/api/v1/:model', auth('read'), (request,response,next) => {
-
-  console.log('request dot model: ', request.model);
-
   request.model.find()
     .then( data => {
       const output = {

@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     email: {type: String, required:true, unique:true},
-    role: {type:String, default:'gamer', enum:['user', 'gamer','editor', 'admin', 'superuser']},
+    role: {type:String, default:'gamer', enum:['user', 'gamer', 'admin']},
   },
   {
     toObject:{ virtuals:true },
@@ -18,11 +18,18 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+
+function _getDefaultCapabilities(role){
+  return role === 'gamer' ? ['read','create','update']
+        :role === 'admin' ? ['create','read','update','delete']
+        :['read']
+};
+
 userSchema.virtual('acl', {
   ref:'roles',
   localField:'role',
   foreignField:'role',
-  justOne:true, 
+  justOne:true,
 });
 
 userSchema.pre('findOne', function() {
@@ -93,12 +100,15 @@ userSchema.methods.comparePassword = function(password) {
 // Generate a JWT from the user id and a secret
 userSchema.methods.generateToken = function() {
 
+  if (!this.capabilities) {
+    this.capabilities = _getDefaultCapabilities(this.role);
+  }
   let tokenData = {
     id:this._id,
     name:this.username,
     email:this.email,
     role:this.role,
-    capabilities:this.capabilities,
+    capabilities:this.capabilities
   };
   return jwt.sign(tokenData, process.env.SECRET || 'changeit' );
 };

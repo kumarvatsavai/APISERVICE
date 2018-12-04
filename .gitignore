@@ -7,6 +7,7 @@ data
 *.crt
 *.key
 *.env
+*.idea
 package-lock.json
 
 ### Vim ###
@@ -33,6 +34,7 @@ Icon
 
 # Thumbnails
 ._*
+*.idea
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
@@ -42,6 +44,7 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+*.idea
 
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -102,3 +105,5 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+*.idea.idea

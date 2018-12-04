@@ -33,7 +33,7 @@
     "jest-mongoose-mock": "^1.2.0",
     "jsonwebtoken": "^8.4.0",
     "mongodb-memory-server": "^2.7.3",
-    "mongoose": "^5.3.13",
+    "mongoose": "^5.3.14",
     "mongoose-json-schema": "0.0.7",
     "mongoose-schema-jsonschema": "^1.1.15",
     "morgan": "^1.9.1",

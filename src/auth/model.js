@@ -1,23 +1,38 @@
 'use strict';
 
 import mongoose from 'mongoose';
+require('mongoose-schema-jsonschema')(mongoose);
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const userSchema = new mongoose.Schema({
-  username: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  email: {type: String},
-  role: {type:String, default:'user', enum:['user', 'editor', 'admin']}
+const userSchema = new mongoose.Schema(
+  {
+    username: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+    email: {type: String, required:true, unique:true},
+    role: {type:String, default:'gamer', enum:['user', 'gamer','editor', 'admin', 'superuser']},
+  },
+  {
+    toObject:{ virtuals:true },
+    toJSON:{ virtuals:true} ,
+  }
+);
+
+userSchema.virtual('acl', {
+  ref:'roles',
+  localField:'role',
+  foreignField:'role',
+  justOne:true, 
 });
 
-// ///////////////////////////////////////////////////
-// const capabilities = {
-//   user: ['read'],
-//   editor: ['create', 'read', 'update'],
-//   admin:['create','read','update',delete']
-// }
-///////////////////////////////////////////////////
+userSchema.pre('findOne', function() {
+  try {
+    this.populate('acl');
+  }
+  catch(e) {
+    console.error(e);
+  }
+});
 
 userSchema.pre('save', function(next) {
   bcrypt.hash(this.password,10)
@@ -27,18 +42,6 @@ userSchema.pre('save', function(next) {
     })
     .catch( error => {throw error;} );
 });
-
-///////////////////////////////////////////////////
-//should show in middleware.js in _authenticate(user)
-// userSchema.post('findOne', function(){
-//   this.capabilities = capabilities[this.role];
-// })
-///////////////////////////////////////////////////
-// method can call from anywhere to see if it'll work
-// userSchema.methods.can = function(capability) {
-//   return capabilities[this.role].includes(capability);
-// };
-///////////////////////////////////////////////////
 
 userSchema.statics.createFromOAuth = function(incoming) {
 
@@ -89,11 +92,13 @@ userSchema.methods.comparePassword = function(password) {
 
 // Generate a JWT from the user id and a secret
 userSchema.methods.generateToken = function() {
+
   let tokenData = {
     id:this._id,
-    ///////////////////////////////////////////////////
-    // capabilities: capabilities[this.role],
-    ///////////////////////////////////////////////////
+    name:this.username,
+    email:this.email,
+    role:this.role,
+    capabilities:this.capabilities,
   };
   return jwt.sign(tokenData, process.env.SECRET || 'changeit' );
 };

@@ -6,7 +6,6 @@ const whitelist = /.*?model.js$/; // Only index *model.js files
 const renamer = (name) => name.replace(/(.*?\-)model/g, 'model'); // make them all named "model"
 const models = requireDirectory(module, '../models', {rename:renamer, include: whitelist});
 
-console.log('Models:', models);
 /*
 models object:
 {

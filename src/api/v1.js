@@ -1,7 +1,6 @@
 'use strict';
 
 import express from 'express';
-
 import auth from '../auth/middleware.js';
 import modelFinder from '../middleware/model-finder.js';
 
@@ -23,11 +22,14 @@ router.get('/api/v1/:model/:name', auth('read'), (request,response,next) => {
     .catch( next );
 });
 
-router.get('/api/v1/:model/schema', auth('superuser'), (request, response) => {
+router.get('/api/v1/:model/schema', auth('admin'), (request, response) => {
   sendJSON(request.model.jsonSchema(), response);
 });
 
 router.get('/api/v1/:model', auth('read'), (request,response,next) => {
+
+  console.log('request dot model: ', request.model);
+
   request.model.find()
     .then( data => {
       const output = {

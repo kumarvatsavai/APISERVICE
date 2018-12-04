@@ -9,11 +9,19 @@ import express from 'express';
 const authRouter = express.Router();
 
 import User from './model.js';
-import Roles from './roles.js';
+import Role from './roles-schema.js';
+import roleModel from './roles-model';
 import auth from './middleware.js';
 import oauth from './lib/oauth.js';
 
-// These routes should support a redirect instead of just spitting out the token ...
+let sendJSON = (data,response) => {
+  response.statusCode = 200;
+  response.statusMessage = 'OK';
+  response.setHeader('Content-Type', 'application/json');
+  response.write( JSON.stringify(data) );
+  response.end();
+};
+
 authRouter.post('/signup', (req, res, next) => {
   let user = new User(req.body);
   let userStats = new playerstats({name:req.body.username, wins: 0, losses: 0});
@@ -39,6 +47,20 @@ authRouter.get('/oauth', (req, res, next) => {
       res.send(token);
     })
     .catch(next);
+});
+
+authRouter.post('/role', (req, res, next) => {
+
+  let capabilities = req.body.capabilities;
+
+  let role = new Role({role:req.body.role, capabilities:capabilities});
+
+  role.save()
+    .then( results => {
+      console.log('Saved role - results: ', results);
+      sendJSON(results, res);
+    })
+    .catch( next );
 });
 
 export default authRouter;

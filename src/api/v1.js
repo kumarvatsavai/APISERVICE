@@ -23,7 +23,7 @@ router.get('/api/v1/:model/:name', auth('read'), (request,response,next) => {
     .catch( next );
 });
 
-router.get('/api/v1/:model/schema', auth('superuser'), (request, response) => {
+router.get('/api/v1/:model/schema', auth('admin'), (request, response) => {
   sendJSON(request.model.jsonSchema(), response);
 });
 

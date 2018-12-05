@@ -42,21 +42,8 @@ describe('api server', () => {
       });
 
   });
-/*
-  it('should respond properly on a get request to a valid model', () => {
 
-    return mockRequest
-      .get('/api/v1/playerstats')
-      .then(results => {
-        expect(results.status).toBe(200);
-      })
-      .catch(err => {
-        expect(err).not.toBeDefined();
-      });
-
-  });
-*/
-  it('should be able to post to /api/v1/singlestat', ()  => {
+  it('should be unable to post to /api/v1/singlestat without auth', ()  => {
 
     let obj = {win:'false', name:'person'};
 
@@ -64,46 +51,32 @@ describe('api server', () => {
       .post('/api/v1/singlestat')
       .send(obj)
       .then(results => {
-        expect(results.status).toBe(200);
-        expect(results.body.text).toEqual(obj.text);
+        expect(results.status).toBe(401);
+        expect(results.body.name).toBeUndefined();
       })
       .catch( err => console.error('err', err) );
 
   });
 
 
-  it('following a post, should find a single record', () => {
+  it('following a post, should not find a record without auth', () => {
 
-    let obj = {win:'false', name:'person'};
+    let obj = {win:'true', name:'personTwo'};
 
     return mockRequest
       .post('/api/v1/singlestat')
       .send(obj)
       .then(results => {
-        return mockRequest.get(`/api/v1/singlestat/${results.body._id}`)
+        return mockRequest.get(`/api/v1/playerstat/${results.body.name}`)
           .then(list => {
-            expect(list.body.text).toEqual(obj.text);
-            expect(list.status).toBe(200);
+            expect(list.body.name).toBeUndefined();
+            expect(list.status).toBe(500);
           });
       })
       .catch( err => console.error('err', err) );
 
   });
-/*
-  it('following multiple posts, should return the correct count', () => {
 
-    return mockRequest
-      .get('/api/v1/singlestats')
-      .then(results => {
-        expect(results.body.count).toEqual(2);
-        expect(results.status).toBe(200);
-      })
-      .catch(err => {
-        expect(err).not.toBeDefined();
-      });
-
-  });
-*/
 });
 
 

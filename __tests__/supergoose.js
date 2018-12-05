@@ -9,7 +9,10 @@ import supertest from 'supertest';
 
 let mongoServer;
 
-jest.setTimeout(30000);
+// time.js
+exports.setTimeout = function() {
+  return global.setTimeout.apply(global, arguments);
+};
 
 /**
  * @server

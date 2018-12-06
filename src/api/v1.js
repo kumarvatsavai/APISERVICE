@@ -24,10 +24,6 @@ router.get('/api/v1/my/:model/:name', auth('read'), (request,response,next) => {
     .catch( next );
 });
 
-router.get('/api/v1/:model/schema', auth('admin'), (request, response) => {
-  sendJSON(request.model.jsonSchema(), response);
-});
-
 router.get('/api/v1/:model', auth('read'), (request,response,next) => {
   request.model.find()
     .then( data => {

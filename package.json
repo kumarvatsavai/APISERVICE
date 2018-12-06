@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "nodemon index.js",
+    "test-watch": "jest --watchAll --coverage",
+    "test": "jest --coverage",
+    "lint": "eslint **/*.js"
   },
   "repository": {
     "type": "git",
@@ -32,13 +35,17 @@
     "jest": "^23.6.0",
     "jest-mongoose-mock": "^1.2.0",
     "jsonwebtoken": "^8.4.0",
+    "mocha": "^5.2.0",
     "mongodb-memory-server": "^2.7.3",
-    "mongoose": "^5.3.13",
+    "mongoose": "^5.3.14",
     "mongoose-json-schema": "0.0.7",
     "mongoose-schema-jsonschema": "^1.1.15",
     "morgan": "^1.9.1",
     "require-directory": "^2.1.1",
-    "superagent": "^4.0.0",
+    "sinon": "^7.1.1",
+    "superagent": "^4.0.0"
+  },
+  "devDependencies": {
     "supertest": "^3.3.0"
   }
 }

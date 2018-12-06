@@ -19,7 +19,7 @@ class Storage {
   save(data) {
 
     if ( data._id ) {
-      return this.schema.findByIdAndUpdate(data._id, data)
+      return this.schema.findByIdAndUpdate(data._id, data);
     }
     else {
       let record = new this.schema(data);

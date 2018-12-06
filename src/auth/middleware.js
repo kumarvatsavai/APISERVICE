@@ -2,9 +2,6 @@
 
 import User from './model.js';
 
-// app.get('/', auth('delete'), ...
-// -> app.get('/', (req,res,next) => ...
-
 export default (capability) => {
 
   return (req, res, next) => {
@@ -13,16 +10,13 @@ export default (capability) => {
 
       let [authType, authString] = req.headers.authorization.split(/\s+/);
 
-      // BASIC Auth  ... Authorization:Basic ZnJlZDpzYW1wbGU=
-      // BEARER Auth ... Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI
-
       switch(authType.toLowerCase()) {
-        case 'basic':
-          return _authBasic(authString);
-        case 'bearer':
-          return _authBearer(authString);
-        default:
-          return _authError();
+      case 'basic':
+        return _authBasic(authString);
+      case 'bearer':
+        return _authBearer(authString);
+      default:
+        return _authError();
       }
 
     } catch(e) {
@@ -45,12 +39,7 @@ export default (capability) => {
     }
 
     function _authenticate(user) {
-      //good user
-      // do we care about capabilities
-      // if so, does the user posses the right capability???
-      // if(user && (!capability) || user.can(capability) {
-      // console.log('in _authenticate', user);
-      if ( user ) {
+      if ((user && (!capability)) || _authorize(user)) { 
         req.user = user;
         req.token = user.generateToken();
         next();
@@ -58,6 +47,13 @@ export default (capability) => {
       else {
         _authError();
       }
+    }
+
+    function _authorize(user) {
+      if (user && user.acl && user.acl.capabilities && user.acl.capabilities.includes(capability)) { 
+        return true;
+      }
+      return false;
     }
 
     function _authError() {

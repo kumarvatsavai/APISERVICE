@@ -11,6 +11,7 @@ const options = {
   useNewUrlParser:true,
   useCreateIndex: true,
 };
+
 mongoose.connect(process.env.MONGODB_URI, options);
 
 // Start the web server

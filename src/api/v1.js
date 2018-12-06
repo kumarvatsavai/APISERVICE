@@ -17,13 +17,14 @@ let sendJSON = (data,response) => {
 
 router.param('model', modelFinder);
 
-router.get('/api/v1/:model/:name', auth('read'), (request,response,next) => {
+// get playerstats by gamer name
+router.get('/api/v1/my/:model/:name', auth('read'), (request,response,next) => {
   request.model.find({name:request.params.name})
     .then( result => sendJSON(result, response) )
     .catch( next );
 });
 
-router.get('/api/v1/:model/schema', auth('superuser'), (request, response) => {
+router.get('/api/v1/:model/schema', auth('admin'), (request, response) => {
   sendJSON(request.model.jsonSchema(), response);
 });
 

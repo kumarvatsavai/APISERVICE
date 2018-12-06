@@ -19,11 +19,11 @@ const userSchema = new mongoose.Schema(
 );
 
 
-function _getDefaultCapabilities(role){
+function _getDefaultCapabilities (role) {
   return role === 'gamer' ? ['read','create','update']
-        :role === 'admin' ? ['create','read','update','delete']
-        :['read']
-};
+    :role === 'admin' ? ['create','read','update','delete']
+      :['read'];
+}
 
 userSchema.virtual('acl', {
   ref:'roles',
@@ -108,7 +108,7 @@ userSchema.methods.generateToken = function() {
     name:this.username,
     email:this.email,
     role:this.role,
-    capabilities:this.capabilities
+    capabilities:this.capabilities,
   };
   return jwt.sign(tokenData, process.env.SECRET || 'changeit' );
 };

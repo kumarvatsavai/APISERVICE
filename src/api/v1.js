@@ -17,7 +17,7 @@ let sendJSON = (data,response) => {
 
 router.param('model', modelFinder);
 
-// get playerstats by gamer name
+// get playerstats and singlestat records by gamer name
 router.get('/api/v1/my/:model/:name', auth('read'), (request,response,next) => {
   request.model.find({name:request.params.name})
     .then( result => sendJSON(result, response) )

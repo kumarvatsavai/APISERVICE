@@ -19,11 +19,11 @@ const userSchema = new mongoose.Schema(
 );
 
 
-function _getDefaultCapabilities (role) {
+userSchema.methods._getDefaultCapabilities = function(role) {
   return role === 'gamer' ? ['read','create','update']
     :role === 'admin' ? ['create','read','update','delete']
       :['read'];
-}
+};
 
 userSchema.virtual('acl', {
   ref:'roles',
@@ -101,7 +101,7 @@ userSchema.methods.comparePassword = function(password) {
 userSchema.methods.generateToken = function() {
 
   if (!this.capabilities) {
-    this.capabilities = _getDefaultCapabilities(this.role);
+    this.capabilities = this._getDefaultCapabilities(this.role);
   }
   let tokenData = {
     id:this._id,

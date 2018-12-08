@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/EnSeven/apiServices.svg?branch=master)](https://travis-ci.com/EnSeven/apiServices)
 # APIServices
 ## Overview
 Welcome to the apiServices wiki! This API is used as the route/method to signup / sign-in to the EnSeven game app. Our apiServer will serve as the gatekeeper for authorization and authentication to our games. Manages database for the overall application. Which includes the data store for our users, including their gaming history. We have started out using a Node Express server with a Mongo backend. We are working on using an Access Control List (ACL) to control access to the various routes, based on roles and role privileges.

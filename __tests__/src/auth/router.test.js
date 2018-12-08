@@ -13,19 +13,19 @@ beforeAll(startDB);
 afterAll(stopDB);
 
 describe('Auth Router', () => {
-  
+
   let users = {
     admin: {username: 'admin', password: 'password', email:'admin@admin.com', role: 'admin'},
     gamer: {username: 'gamer', password: 'gamer', email:'gamer@gamer.com', role: 'gamer'},
   };
-  
+
   Object.keys(users).forEach( userType => {
-    
+
     describe(`${userType} users`, () => {
-      
+
       let encodedToken;
       let id;
-      
+
       it('can create one', () => {
         return mockRequest.post('/signup')
           .send(users[userType])
@@ -58,10 +58,10 @@ describe('Auth Router', () => {
             expect(token.id).toEqual(id);
             expect(token.capabilities).toBeDefined();
           });
-      }); 
-      
+      });
+
     });
-    
+
   });
-  
+
 });

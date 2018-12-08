@@ -11,7 +11,6 @@ const authRouter = express.Router();
 import User from './model.js';
 import Roles from './roles.js';
 import auth from './middleware.js';
-import oauth from './lib/oauth.js';
 
 // These routes should support a redirect instead of just spitting out the token ...
 authRouter.post('/signup', (req, res, next) => {

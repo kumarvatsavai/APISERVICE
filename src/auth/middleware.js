@@ -34,12 +34,13 @@ export default (capability) => {
     }
 
     function _authBearer(authString) {
+
       return User.authenticateToken(authString)
         .then( user => _authenticate(user) );
     }
 
     function _authenticate(user) {
-      if ((user && (!capability)) || _authorize(user)) { 
+      if ((user && (!capability)) || _authorize(user)) {
         req.user = user;
         req.token = user.generateToken();
         next();
@@ -50,7 +51,8 @@ export default (capability) => {
     }
 
     function _authorize(user) {
-      if (user && user.acl && user.acl.capabilities && user.acl.capabilities.includes(capability)) { 
+      const capabilities = user._getDefaultCapabilities(user.role);
+      if (user &&  capabilities && capabilities.includes(capability)) {
         return true;
       }
       return false;

@@ -38,7 +38,7 @@
     "jwt-decode": "^2.2.0",
     "mocha": "^5.2.0",
     "mongodb-memory-server": "^2.7.3",
-    "mongoose": "^5.3.14",
+    "mongoose": "^5.7.5",
     "mongoose-json-schema": "0.0.7",
     "mongoose-schema-jsonschema": "^1.1.15",
     "morgan": "^1.9.1",

@@ -34,7 +34,7 @@
     "express": "^4.16.4",
     "jest": "^23.6.0",
     "jest-mongoose-mock": "^1.2.0",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^2.2.0",
     "mocha": "^5.2.0",
     "mongodb-memory-server": "^2.7.3",
